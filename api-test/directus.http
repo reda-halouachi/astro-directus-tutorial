@@ -8,6 +8,9 @@
 
 GET {{DIRECTUS_URL}}/items/global
 
+###
+
+GET {{DIRECTUS_URL}}/items/pages
 
 ###
 

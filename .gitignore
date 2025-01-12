@@ -22,3 +22,5 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+directus-cms/.admin_password
+directus-cms/.secret_key

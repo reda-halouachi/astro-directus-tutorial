@@ -14,5 +14,9 @@
     "@directus/sdk": "^18.0.3",
     "astro": "^5.1.5",
     "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1"
   }
 }

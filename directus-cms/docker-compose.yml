@@ -11,9 +11,11 @@ services:
             - ./uploads:/directus/uploads
             - ./extensions:/directus/extensions
         environment:
-            SECRET_FILE: /run/secrets/secret_key
+            #SECRET_FILE: /run/secrets/secret_key
+            SECRET: "h6ulhEZuqywMBWpLAsrraHwSRlvTK5Pooi1TjkHEVmbEMSZG6mV6Zr7s80jiIAAi"
             ADMIN_EMAIL: "mauro.longano@marconirovereto.it"
-            ADMIN_PASSWORD_FILE: /run/secrets/admin_password
+            #ADMIN_PASSWORD_FILE: /run/secrets/admin_password
+            ADMIN_PASSWORD: "admin"
             DB_CLIENT: "sqlite3"
             DB_FILENAME: "/directus/database/data.db"
             WEBSOCKETS_ENABLED: "true"

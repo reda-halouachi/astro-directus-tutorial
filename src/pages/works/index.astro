@@ -1,0 +1,20 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import type { Work } from "../../types/work";
+
+// Fetch works from Directus
+const response = await fetch(
+  " http://localhost:8055/items/works?fields=*,creator.*,creator.user.*,category.*",
+  {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  },
+);
+
+const data = await response.json();
+const works: Work[] = data.data;
+---
+
+<Layout title="Works Gallery">
+</Layout>

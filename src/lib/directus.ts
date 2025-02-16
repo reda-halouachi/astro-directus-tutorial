@@ -35,6 +35,10 @@ type SchemaOLD = {
 // Define a type for our Directus schema. This is the *most important* part for strong typing.
 // You'll need to update this to reflect your *exact* Directus schema.
 export type CreatorSchema = {
+  global: {
+    title: string;
+    description: string;
+  } & Record<string, any>; // Allow other built-in fields.
   directus_users: {
     id: string;
     first_name: string | null;
@@ -43,11 +47,11 @@ export type CreatorSchema = {
     approved: boolean;
     role: string; // Assuming this is a string ID referencing directus_roles
     bio: string;
-  } & Record<string, any>; // Allow other built-in fields.  Important!
+  } & Record<string, any>; // Allow other built-in fields.
   creators: {
     id: number;
     user_id: string; // ID of the related directus_users record (string, not number, in Directus SDK)
-    specialization: string; 
+    specialization: string;
   } & Record<string, any>;
   works: {
     id: number;

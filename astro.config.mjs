@@ -14,7 +14,7 @@ export default defineConfig({
   integrations: [tailwind({
     nesting: true,
   }), tailwindConfigViewer(), react()],
-
+  output: 'server',
   adapter: node({
     mode: "standalone",
   }),

@@ -12,7 +12,7 @@ services:
             - ./extensions:/directus/extensions
         environment:
             #SECRET_FILE: /run/secrets/secret_key
-            SECRET: "h6ulhEZuqywMBWpLAsrraHwSRlvTK5Pooi1TjkHEVmbEMSZG6mV6Zr7s80jiIAAi"
+            SECRET: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRmMzYzMDA0LTI2NjItNDc5MS1iNWY0LTQ4OWJjNzAzOTIzNSIsInJvbGUiOiJhOWI0MWM3Mi0wMzUyLTQ5ZjQtOGM4MC0xNmU4YWU4YWFiN2EiLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTc0MDczNjU2NywiZXhwIjoxNzQwNzM3NDY3LCJpc3MiOiJkaXJlY3R1cyJ9.DkjxjRtyRIqTNKkHi1EHqE0dkjeVFj2t0uabu56Oa78"
             ADMIN_EMAIL: "mauro.longano@marconirovereto.it"
             #ADMIN_PASSWORD_FILE: /run/secrets/admin_password
             ADMIN_PASSWORD: "admin"

@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import type { Work } from "../../types/work";
+import { marked } from "marked";
 
 // Fetch works from Directus
 const response = await fetch(
@@ -9,11 +10,13 @@ const response = await fetch(
     headers: {
       "Content-Type": "application/json",
     },
-  },
+  }
 );
 
 const data = await response.json();
 const works: Work[] = data.data;
+const description = (description: string) =>
+  description ? marked(description) : "";
 ---
 
 <Layout title="Works Gallery">
@@ -40,10 +43,14 @@ const works: Work[] = data.data;
             )}
             <div class="p-4">
               <h2 class="text-xl font-semibold mb-2">{work.title}</h2>
-              <p class="text-gray-600 mb-4">{work.description}</p>
+              <article
+                class="text-gray-600 mb-4 [&>p]:mb-4"
+                set:html={description(work.description)}
+              />
               <div class="flex justify-between items-center">
                 <span class="text-sm text-gray-500">
-                  By {work.creator.firstname} {work.creator.lastname}
+                  By {work.creator.user.first_name}{" "}
+                  {work.creator.user.last_name}
                 </span>
                 <span class="text-sm text-gray-500">{work.category.name}</span>
               </div>

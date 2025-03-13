@@ -11,68 +11,104 @@ import {
 import type { ApiCollections } from "../../api-collection";
 
 // Define a type for our Directus schema.
-// You'll need to update this to reflect your Directus schema.
-export type CreatorSchema = {
-  global: {
-    title: string;
-    description: string;
-  } & Record<string, any>; // Allow other built-in fields.
-  directus_users: {
-    id: string;
-    first_name: string | null;
-    last_name: string | null;
-    email: string;
-    approved: boolean;
-    role: string; // Assuming this is a string ID referencing directus_roles
-    bio: string;
-  } & Record<string, any>; // Allow other built-in fields.
-  creators: {
-    id: number;
-    user_id: string; // ID of the related directus_users record (string, not number, in Directus SDK)
-    specialization: string;
-  } & Record<string, any>;
-  works: {
-    id: number;
-    creator: number; // ID of the related creators record
-    title: string;
-    description: string;
-    content_type: "image" | "text";
-    content: string | null;
-    image: { id: string; width: number; height: number } | null; // File object
-    categories: number[]; // Array of category IDs
-    published_date: string; // ISO Date string
-    status: "draft" | "published" | "archived";
-  } & Record<string, any>;
-  categories: {
-    id: number;
-    name: string;
-  } & Record<string, any>;
-  directus_files: {
-    id: string;
-    storage: string;
-    filename_disk: string;
-    filename_download: string;
-    title: string;
-    type: string;
-    folder: string | null;
-    uploaded_by: string;
-    uploaded_on: string;
-    modified_by: string;
-    modified_on: string;
-    charset: string | null;
-    filesize: number;
-    width: number | null;
-    height: number | null;
-    duration: number | null;
-    embed: string | null;
-    description: string | null;
-    location: string | null;
-    tags: string[] | null;
-    metadata: Record<string, any> | null;
-  } & Record<string, any>;
+
+export type User = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  role?: string;
+  description?: string;
+  bio?: string;
+  avatar?: string;
+}
+
+export type Category = {
+  id: number;
+  name: string;
 };
 
-const directus = createDirectus<ApiCollections>(
+export type Creator = {
+  id: number;
+  specialization: string;
+  bio: string | null;
+  avatar: string | null;
+  user: number | User;
+}
+
+export type Work = {
+  id: number;
+  creator: number | Creator;
+  title: string;
+  description: string;
+  content_type: "image" | "text";
+  content: string | null;
+  image: string | null;
+  category: number | Category;
+  published_date: string;
+  status: "draft" | "published" | "archived";
+}
+
+export type File = {
+  id: string;
+  storage: string;
+  filename_disk: string;
+  filename_download: string;
+  title: string;
+  type: string;
+  folder: string | null;
+  uploaded_by: string;
+  uploaded_on: string;
+  modified_by: string;
+  modified_on: string;
+  charset: string | null;
+  filesize: number;
+  width: number | null;
+  height: number | null;
+  duration: number | null;
+  embed: string | null;
+  description: string | null;
+  location: string | null;
+  tags: string[] | null;
+  metadata: Record<string, any> | null;
+}
+
+export type Global = {
+  title: string;
+  description: string | null;
+  writer_cover: string | null;
+}
+
+export type Schema = {
+  global: Global & Record<string, any>; // Allow other built-in fields.
+  directus_users: User & Record<string, any>; // Allow other built-in fields.
+  creators: Creator & Record<string, any>;
+  works: Work[];
+  categories: Category & Record<string, any>;
+  directus_files: File & Record<string, any>;
+};
+
+export const user = (creator: Work["creator"]): User | null =>
+  creator &&
+    typeof creator === "object" &&
+    creator.user &&
+    typeof creator.user === "object"
+    ? creator.user
+    : null;
+
+const directus_assets = import.meta.env.PUBLIC_DIRECTUS_URL + "/assets";
+
+
+export const avatar = (user: Creator["user"] | null) =>
+  user && typeof user === "object" && user.avatar
+    ? `${user.avatar}`
+    : null;
+
+export const category = (category: Work["category"] | null) =>
+  category && typeof category === "object" ? category : null;
+
+
+const directus = createDirectus<Schema>(
   import.meta.env.PUBLIC_DIRECTUS_URL,
 )
   .with(rest())

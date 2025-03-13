@@ -4,6 +4,15 @@ import directus from "../lib/directus.ts";
 import { readSingleton } from "@directus/sdk";
 
 const global = await directus.request(readSingleton("global"));
+// Get featured works (latest 3)
+const works = await directus.request(
+  readItems("works", {
+    filter: { status: { _eq: "published" } },
+    limit: 3,
+    fields: ["*", { creator: ["*", { user: ["*"] }] }, { category: ["*"] }],
+  })
+);
+
 ---
 
 <Layout title={global.title}>

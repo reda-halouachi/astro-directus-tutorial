@@ -8,6 +8,7 @@ import {
   type DirectusClient,
   type AuthenticationData,
 } from "@directus/sdk";
+import type { ApiCollections } from "../../api-collection";
 
 // Define a type for our Directus schema.
 // You'll need to update this to reflect your Directus schema.
@@ -71,7 +72,7 @@ export type CreatorSchema = {
   } & Record<string, any>;
 };
 
-const directus = createDirectus<CreatorSchema>(
+const directus = createDirectus<ApiCollections>(
   import.meta.env.PUBLIC_DIRECTUS_URL,
 )
   .with(rest())

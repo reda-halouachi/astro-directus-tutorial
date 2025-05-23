@@ -1,0 +1,29 @@
+---
+import AuthLayout from "../layouts/AuthLayout.astro";
+import WorkCard from "../components/WorkCard";
+import { getWorks, getCategories } from "../lib/api";
+
+const works = await getWorks();
+const categories = await getCategories();
+---
+
+<AuthLayout title="Portfolio Works">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">Works</h1>
+      <div class="flex gap-2">
+        {
+          categories.map((category) => (
+            <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+              {category.name}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {works.map((work) => <WorkCard works={work} client:load />)}
+    </div>
+  </div>
+</AuthLayout>

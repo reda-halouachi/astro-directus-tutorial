@@ -1,0 +1,17 @@
+---
+import AuthLayout from "../layouts/AuthLayout.astro";
+import CreatorCard from "../components/CreatorCard";
+import { getCreators } from "../lib/api";
+
+const creators = await getCreators();
+---
+
+<AuthLayout title="Creators">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Creators</h1>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {creators.map((creator) => <CreatorCard creator={creator} client:load />)}
+    </div>
+  </div>
+</AuthLayout>
